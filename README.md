@@ -9,3 +9,5 @@
 3. create early stopping condition in training
 
 4. create model checkpoint condition in training
+
+5. Model initialization
