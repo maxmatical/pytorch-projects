@@ -16,10 +16,12 @@
 
 6. Model initialization
 
-7. learning rate annealing
+7. Learning Rate annealing
 - cosine annealing
 - cosine annealing with warm restarts
 - snapshot ensembles
 - no need to create stopping condition during training. train over full epochs
+
+8. Freeze layers/blocks
 
 - can look at pytorch ignite (https://pytorch.org/ignite/index.html) for early stopping/model checkpoint
