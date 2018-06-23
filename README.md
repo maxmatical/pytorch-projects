@@ -17,6 +17,7 @@
 6. Model initialization
 
 7. Learning Rate annealing
+- lr_finder()
 - cosine annealing
 - cosine annealing with warm restarts
 - snapshot ensembles
