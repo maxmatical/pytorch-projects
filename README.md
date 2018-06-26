@@ -23,6 +23,8 @@ Alt approach: save model to a different output file after every x epochs (save o
 i.e. if (epoch + 1)%10 == 0 and (epoch + 1) >= some number:
         save model
 
+https://www.programcreek.com/python/example/101175/torch.save
+
 # Snapshot ensembles
 
 # Model initialization
