@@ -2,33 +2,40 @@
 
 # TODO
 
-1. train_val_split
+# train_val_split
 - use multiple data loaders for training data and SubsetRandomSampler to create train/val data (https://am207.github.io/2018spring/wiki/ValidationSplits.html)
 
 - can use sklearn train_test_split
 
-2. create a way to internally evaluate validation loss during training
+# create a way to internally evaluate validation loss during training
 - done (cifar10 another version)
 
-3. create early stopping condition in training
+# create early stopping condition in training
 
-4. create model checkpoint condition in training
+# create model checkpoint condition in training
+-  Saving/loading model at the end of a specified epoch 
+- https://stackoverflow.com/questions/42703500/best-way-to-save-a-trained-model-in-pytorch/43819235
+- https://cs230-stanford.github.io/pytorch-getting-started.html#saving-and-loading-models
+- can look at pytorch ignite (https://pytorch.org/ignite/index.html) for early stopping/model checkpoint
 
-5. Snapshot ensembles
+Alt approach: save model to a different output file after every x epochs (save only the last n models). Load latest model before overfitting and train for a few epochs, stopping just before overfitting
 
-6. Model initialization
+i.e. if (epoch + 1)%10 == 0 and (epoch + 1) >= some number:
+        save model
 
-7. Learning Rate annealing
+# Snapshot ensembles
+
+# Model initialization
+https://stackoverflow.com/questions/49433936/how-to-initialize-weights-in-pytorch
+
+
+# Learning Rate annealing
 - lr_finder()
 - cosine annealing
 - cosine annealing with warm restarts
 - snapshot ensembles
 - no need to create stopping condition during training. train over full epochs
 
-8. Freeze layers/blocks
+# Freeze layers/blocks
 
-9. Saving/loading model at the end of a specified epoch 
-- https://stackoverflow.com/questions/42703500/best-way-to-save-a-trained-model-in-pytorch/43819235
-- https://cs230-stanford.github.io/pytorch-getting-started.html#saving-and-loading-models
 
-- can look at pytorch ignite (https://pytorch.org/ignite/index.html) for early stopping/model checkpoint
