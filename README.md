@@ -27,4 +27,8 @@
 
 8. Freeze layers/blocks
 
+9. Saving/loading model at the end of a specified epoch 
+- https://stackoverflow.com/questions/42703500/best-way-to-save-a-trained-model-in-pytorch/43819235
+- https://cs230-stanford.github.io/pytorch-getting-started.html#saving-and-loading-models
+
 - can look at pytorch ignite (https://pytorch.org/ignite/index.html) for early stopping/model checkpoint
