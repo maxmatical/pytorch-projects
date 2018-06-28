@@ -41,4 +41,6 @@ https://stackoverflow.com/questions/49433936/how-to-initialize-weights-in-pytorc
 
 # Freeze layers/blocks
 
+# multiple inputs/outputs
+
 
