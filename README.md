@@ -42,5 +42,5 @@ https://stackoverflow.com/questions/49433936/how-to-initialize-weights-in-pytorc
 # Freeze layers/blocks
 
 # multiple inputs/outputs
-
+https://discuss.pytorch.org/t/nn-module-with-multiple-inputs/237/3
 
