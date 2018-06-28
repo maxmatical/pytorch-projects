@@ -7,8 +7,8 @@
 
 - can use sklearn train_test_split
 
-# create a way to internally evaluate validation loss during training
-- done (cifar10 another version)
+# create a way to internally evaluate validation loss during training (done)
+
 
 # create early stopping condition in training
 
@@ -27,7 +27,7 @@ https://www.programcreek.com/python/example/101175/torch.save
 
 # Snapshot ensembles
 
-# Model initialization
+# Model initialization (done)
 https://stackoverflow.com/questions/49433936/how-to-initialize-weights-in-pytorch
 
 
