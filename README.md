@@ -45,7 +45,7 @@ https://stackoverflow.com/questions/49433936/how-to-initialize-weights-in-pytorc
 https://discuss.pytorch.org/t/nn-module-with-multiple-inputs/237/3
 
 
-# using (adaptive) average pooling instead of concatenate and dense layers
+# using (adaptive) average/max pooling to flatten conv layers
 https://discuss.pytorch.org/t/global-average-pooling-in-pytorch/6721/11
 
 https://discuss.pytorch.org/t/global-average-pooling-misunderstanding/18272
