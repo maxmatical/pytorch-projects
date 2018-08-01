@@ -30,7 +30,9 @@ https://www.programcreek.com/python/example/101175/torch.save
 ### Learning Rate annealing
 - lr_finder()
 - cosine annealing
-- cosine annealing with warm restarts
+- cosine annealing with warm restarts (https://jsideas.net/python/2018/03/14/snapshot_ensemble.html)
+- reduce LR on plateau (https://discuss.pytorch.org/t/problem-with-reducelronplateau/10499/2)'
+        - when using LR scheduler (don't use optimizer.step)
 - snapshot ensembles
 - no need to create stopping condition during training. train over full epochs
 
