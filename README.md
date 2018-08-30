@@ -31,16 +31,29 @@ i.e. if (epoch + 1)%10 == 0 and (epoch + 1) >= some number:
 
 https://www.programcreek.com/python/example/101175/torch.save
 
-### Snapshot ensembles
-
-
 
 ### Learning Rate annealing
 - lr_finder()
 - no need to create stopping condition during training. train over full epochs
 
 ### Freeze layers/blocks
+https://medium.com/@14prakash/almost-any-image-classification-problem-using-pytorch-i-am-in-love-with-pytorch-26c7aa979ec4
 
+Transfer learning tutorial: https://github.com/pytorch/tutorials/blob/master/beginner_source/transfer_learning_tutorial.py
+
+- freezing individual layers:https://raberrytv.wordpress.com/2017/10/28/pytorch-freezing-weights-of-pre-trained-layers/
+        - set param.requires_grad = True to unfreeze individual layers (gradual unfreezing of layers)
+- freezing blocks of layers: https://discuss.pytorch.org/t/how-the-pytorch-freeze-network-in-some-layers-only-the-rest-of-the-training/7088/3?u=maxmatical
+- freeze full model:  
+        for param in model.parameters():
+                param.requires_grad = False
+
+### differential/discriminative learning rates
+- https://pytorch.org/docs/master/optim.html#per-parameter-options
+
+### adding/removing layers from pretrained models
+- adding layers: https://discuss.pytorch.org/t/how-to-perform-finetuning-in-pytorch/419/12?u=maxmatical
+- removing last layer: https://discuss.pytorch.org/t/remove-a-layer-from-inception-model/11472
 
 # Completed
 
