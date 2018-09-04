@@ -10,6 +10,9 @@
 
 # TODO
 
+### structured data models
+https://yashuseth.blog/2018/07/22/pytorch-neural-network-for-tabular-data-with-categorical-embeddings/
+
 ### train_val_split
 - use multiple data loaders for training data and SubsetRandomSampler to create train/val data (https://am207.github.io/2018spring/wiki/ValidationSplits.html)
 
