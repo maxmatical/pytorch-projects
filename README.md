@@ -3,6 +3,7 @@
 # Future projects
 
 - Residual Network + inception (inception v4/inception-resnet)
+- SEnet
 - variational autoencoders
 - language model (word level)
 - language model (character level)
