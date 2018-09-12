@@ -3,7 +3,7 @@
 # Future projects
 
 - Residual Network + inception (inception v4/inception-resnet)
-- SEnet
+- SEnet https://github.com/miraclewkf/SENet-PyTorch
 - variational autoencoders
 - language model (word level)
 - language model (character level)
