@@ -9,7 +9,6 @@
 - language model (character level)
 - transformer model 
 - Attention Augmented convnets (https://github.com/leaderj1001/Attention-Augmented-Conv2d)
-
         - can use base AAconv layer as base for future archs (resnets, densenets etc)
 # TODO
 
