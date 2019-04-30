@@ -15,7 +15,7 @@ use_cuda = torch.cuda.is_available()
 device = torch.device("cuda" if use_cuda else "cpu")
 
 class augmented_conv2d(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, dk, dv, Nh, relative):
+    def __init__(self, in_channels, out_channels, kernel_size, dk, dv, Nh, relative, stride = 1, padding = 1):
         super(augmented_conv2d, self).__init__()
     
         self.in_channels = in_channels
@@ -27,13 +27,13 @@ class augmented_conv2d(nn.Module):
         self.relative = relative
         
         # Input has shape [bs, in_channels, H, W]
-        self.conv_out = nn.Conv2d(self.in_channels, self.out_channels - self.dv, kernel_size = self.kernel_size, padding = 1)
+        self.conv_out = nn.Conv2d(self.in_channels, self.out_channels - self.dv, kernel_size = self.kernel_size, stride = stride, padding = 1)
         
         # used for compute_flat_qkv(inputs, dk,dv, Nh)
-        self.qkv_conv = nn.Conv2d(self.in_channels, 2*self.dk+self.dv, kernel_size = 1 )
+        self.qkv_conv = nn.Conv2d(self.in_channels, 2*self.dk+self.dv, kernel_size = 1 stride = stride, padding = 1)
         
         # used for attn_out
-        self.attn_out = nn.Conv2d(self.dv, self.dv, 1)
+        self.attn_out = nn.Conv2d(self.dv, self.dv, kernel_size = 1, stride = 1, padding = 0)
         
         def forward(self, x):
             # input is [Batch_size, in_channels, H, W]
