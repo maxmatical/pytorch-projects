@@ -17,7 +17,7 @@ device = torch.device("cuda" if use_cuda else "cpu")
 class augmented_conv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, dk, dv, Nh, relative, stride = 1, padding = 1):
         super(augmented_conv2d, self).__init__()
-    
+
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.kernel_size = kernel_size
@@ -25,55 +25,55 @@ class augmented_conv2d(nn.Module):
         self.dv = dv
         self.Nh = Nh
         self.relative = relative
-        
+
         # Input has shape [bs, in_channels, H, W]
         self.conv_out = nn.Conv2d(self.in_channels, self.out_channels - self.dv, kernel_size = self.kernel_size, stride = stride, padding = 1)
-        
+
         # used for compute_flat_qkv(inputs, dk,dv, Nh)
-        self.qkv_conv = nn.Conv2d(self.in_channels, 2*self.dk+self.dv, kernel_size = 1 stride = stride, padding = 1)
-        
+        self.qkv_conv = nn.Conv2d(self.in_channels, 2*self.dk+self.dv, kernel_size = self.kernel_zise,  stride = stride, padding = 1)
+
         # used for attn_out
         self.attn_out = nn.Conv2d(self.dv, self.dv, kernel_size = 1, stride = 1, padding = 0)
-        
+
         def forward(self, x):
             # input is [Batch_size, in_channels, H, W]
             bs, _, H, W = x.size() # used later on for computing attn_out
-            
+
             conv_out = self.conv_out(x) #output is [bs, out_channels, H, W]
-            
+
             flat_q, flat_k, flat_v, q, k, v = compute_flat_qkv(x, self.dk, self.dv, self.Nh) #q, k, v will be used later
             # output dim for flat_q, flat_k, flat_v: [bs, Nh, H*W or H*dvh or H*dkh]
             # dvh = dv/Nh, dkh = dk/Nh
             # q k v has dim [bs, Nh, H, W or dv or dk for q/k/v]
-            
+
             logits = torch.matmul(flat_q.transpose(2,3), flat_k)
-            
+
             if self.relative:
                 h_rel_logits, w_rel_logits = self.relative_logits(q)
                 logits += h_rel_logits
                 logits += w_rel_logits
-            
+
             weights = F.softmax(logits, dim = -1) # output dim is [bs, Nh, H*W, dvh]
-                
+
             attn_out = torch.matmul(weights, flat_v)
             attn_out = torch.reshape(attn_out, (bs, self.Nh, self.dv//self.Nh, H, W))
             attn_out = self.combine_heads_2d(attn_out) #output dim is [bs, dv, H, W]
             attn_out = self.attn_out(attn_out)
-            
+
             # concats the results from conv and attn
             return torch.cat((conv_out, attn_out), dim = 1)
-        
+
         # helper functions:
         """
         helper functions used:
-        
+
         compute_flat_qkv(self, dk, dv, Nh)
-        
+
         relative_logits(self, q)
-        
+
         combine_heads_2d(self, x)
         """
-        
+
         def compute_flat_qkv(self, x, dk, dv, Nh):
             N, _, H, W = x.shape()
             qkv = self.qkv_conv(x)
@@ -81,20 +81,20 @@ class augmented_conv2d(nn.Module):
             q = self.split_heads_2d(q, Nh)
             k = self.split_heads_2d(k, Nh)
             v = self.split_heads_2d(v, Nh)
-            
+
             dkh = dk//Nh
             q *= dkh**(-0.5)
             flat_q = torch.reshape(q, (N, Nh, dk, H*W))
             flat_k = torch.reshape(q, (N, Nh, dk, H*W))
             flat_v = torch.reshape(q, (N, Nh, dv, H*W))
             return flat_q, flat_k, flat_v, q, k, v
-        
+
         def split_heads_2d(self, x, Nh):
             bs, n_channels, H, W = x.size()
 #             ret_shape = (batch, Nh, channels // Nh, height, width)
             split = torch.reshape(x, (batch, Nh, channels // Nh, height, width))
             return split
-        
+
         def combine_heads_2d(self, x):
             bs, Nh, dv, H, W = x.size()
 #             ret_shape = (bs, Nh * dv, H, W)
@@ -116,13 +116,13 @@ class augmented_conv2d(nn.Module):
             rel_logits_h = self.relative_logits_1d(torch.transpose(q, 2, 3), key_rel_h, W, H, Nh, "h")
 
             return rel_logits_h, rel_logits_w
-        
+
         def relative_logits_1d(self, q, rel_k, H, W, Nh, case):
             """
-            
+
             Compute relative logits along one dimension.
             [bs, Nh,H, W, 2*W-1]
-            
+
             """
             rel_logits = torch.einsum('bhxyd,md->bhxym', q, rel_k)
             rel_logits = torch.reshape(rel_logits, (-1, Nh * H, W, 2 * W - 1))
@@ -138,7 +138,7 @@ class augmented_conv2d(nn.Module):
                 rel_logits = torch.transpose(rel_logits, 2, 4).transpose(4, 5).transpose(3, 5)
             rel_logits = torch.reshape(rel_logits, (-1, Nh, H * W, H * W))
             return rel_logits
-            
+
         def rel_to_abs(self, x):
             bs, Nh, L, _ = x.size()
 
@@ -152,4 +152,3 @@ class augmented_conv2d(nn.Module):
             final_x = torch.reshape(flat_x_padded, (bs, Nh, L + 1, 2 * L - 1))
             final_x = final_x[:, :, :L, L - 1:]
             return final_x
-
