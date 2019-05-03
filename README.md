@@ -14,5 +14,5 @@ Paper: https://arxiv.org/abs/1706.03762
 
 ## Densenet/Resnet with attention augmented convolutional layers
 - Densenet: still needs to fix some bugs
-
+- Wide Resnet implementation: https://github.com/leaderj1001/Attention-Augmented-Conv2d
 
