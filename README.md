@@ -12,6 +12,12 @@ Paper: https://arxiv.org/abs/1706.03762
 
 - https://towardsdatascience.com/how-to-code-the-transformer-in-pytorch-24db27c8f9ec
 
+## Spacial transformers
+
+https://arxiv.org/abs/1506.02025
+
+https://pytorch.org/tutorials/intermediate/spatial_transformer_tutorial.html
+
 ## Densenet/Resnet with attention augmented convolutional layers
 - Densenet: still needs to fix some bugs
 - Wide Resnet implementation: https://github.com/leaderj1001/Attention-Augmented-Conv2d
